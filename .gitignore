@@ -1,7 +1,5 @@
 data/raw/*
 !data/raw/manifest.parquet
-data/interim/
-data/processed/
 *.pdf
 __pycache__/
 *.pyc
