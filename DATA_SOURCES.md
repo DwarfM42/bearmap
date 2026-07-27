@@ -79,3 +79,20 @@ PROJECT_SPEC.mdの停止条件（出没データの位置粒度が市町村単�
 - 農業被害・人身被害データの所在を別途特定する（種別間の検出確率差を使う識別戦略の実現可否に直結する）。
 
 これらはP1のやり直しではなく、P2（データ取得・パネル構築）の最初のステップとして自然に組み込める範囲である。P2へ進んでよいと判断する。
+
+---
+
+## 追補（P4a時点、2026-07-27）：実際に取得した共変量データ
+
+P1時点では「取得可能」の確認にとどめていた人間活動・環境変数について、P4a-1で実際に取得した
+ソース・手法を記録する。詳細な経緯・断念した項目はreports/P4A_SUMMARY.mdを参照。
+
+| データ名 | 提供元 | URL | 粒度 | 期間 | 形式 | ライセンス | 取得日 | 取得可否 | 備考 |
+|---|---|---|---|---|---|---|---|---|---|
+| 令和2年国勢調査 4次メッシュ(500m) 人口及び世帯 北海道 | 総務省統計局(e-Stat) | https://www.e-stat.go.jp/gis/statmap-search/data?statsId=T001141&code=01&downloadType=2 | 500mメッシュ（JIS標準地域メッシュ4次、1kmメッシュへ集計して使用） | 2020年（令和2年）単年 | CSV(Shift-JIS, zip圧縮) | e-Stat利用規約（出典明記） | 2026-07-27 | **取得済み** | **2017-2025年の全年に同一値を機械的に割り当てる非補間版**。2015年国勢調査との補間版は未作成。列T001141001が人口総数。 |
+| 北海道 OSM地域抽出（hokkaido-latest.osm.pbf） | Geofabrik GmbH | https://download.geofabrik.de/asia/japan/hokkaido-latest.osm.pbf | OSMベクタデータ全種別（道路・土地利用・河川等） | 2026-07-26時点のOSMデータ | .osm.pbf（187MB） | ODbL 1.0 (© OpenStreetMap contributors) | 2026-07-27 | **取得済み** | Overpass API（overpass-api.de、ミラーoverpass.kumi.systems含む）でのbbox+タグクエリが不安定・低速だったため、地域一括抽出ファイルを直接ダウンロードしosmiumでローカル処理する方式に切り替えた。道路32,655way・土地利用2,826ポリゴン・河川2,114wayを抽出。 |
+| 基盤地図情報 数値標高モデル 標高タイル(dem, 10mメッシュ) | 国土地理院 | https://cyberjapandata.gsi.go.jp/xyz/dem/{z}/{x}/{y}.txt (z=14) | 10mメッシュ | 現況 | テキストタイル（256×256セル） | 国土地理院コンテンツ利用規約（出典明記） | 2026-07-27 | **取得済み** | 分析範囲の434/440タイルを取得（6タイルは海域等でHTTP 404）。ユーザー登録不要で取得できる公開タイルサービス。 |
+| 建物フットプリント（OSM building=*） | OpenStreetMap | — | — | — | — | — | 2026-07-27 | **取得断念** | Overpass APIでcountクエリすら504タイムアウトするほど応答が重く、本パスでは断念。宅地系土地利用（landuse=residential等）の被覆率を建物密度の代理変数として使う。将来的にはGeofabrik PBFからosmiumで抽出することも可能（未実施）。 |
+
+出力：`data/processed/sapporo_covariates_1km.parquet`（1,443セル、JIS標準地域メッシュ3次メッシュ単位）。
+生成スクリプト：`src/ingest/fetch_population_mesh.py`, `src/ingest/fetch_osm_pbf.py`, `src/ingest/fetch_dem.py`, `src/features/build_covariates.py`。

@@ -11,6 +11,7 @@
 - [x] P1: データ取得可能性の確認 → [DATA_SOURCES.md](DATA_SOURCES.md)（判定: 継続可）
 - [x] P2: データ取得・パネル構築（札幌市のみ） → [P2_GATE.md](P2_GATE.md)（P2d判定: 札幌市高解像度／全道低解像度を別系列化、全道統合は保留）
 - [x] P3: 記述統計・観測過程診断（札幌市のみ） → [P3_DESCRIPTIVE.md](P3_DESCRIPTIVE.md)（H1判定保留、H4部分的支持、H6曜日差は支持・原因は判定不能）
-- [ ] P4: 観測過程を考慮したモデル
+- [x] P4a: 共変量取得・断層診断・分析仕様固定 → [reports/P4A_SUMMARY.md](reports/P4A_SUMMARY.md) / [P4_MODEL_PLAN.md](P4_MODEL_PLAN.md)（P4bへ進む条件は充足、承認待ちで停止中）
+- [ ] P4b: ベースラインモデル（人間の承認待ち）
 - [ ] P5: 食物資源・気象との突合
 - [ ] P6: レポート

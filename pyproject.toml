@@ -5,12 +5,16 @@ description = "Add your description here"
 requires-python = ">=3.11"
 dependencies = [
     "duckdb>=1.5.5",
+    "geopandas>=1.1.4",
     "jpholiday>=1.0.3",
     "matplotlib>=3.11.1",
+    "osmium>=4.3.1",
     "pandas>=3.0.5",
     "polars>=1.43.1",
     "pyarrow>=25.0.0",
+    "pyproj>=3.7.2",
     "requests>=2.34.2",
+    "shapely>=2.1.2",
 ]
 
 [dependency-groups]
