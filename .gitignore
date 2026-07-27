@@ -1,4 +1,5 @@
-data/raw/
+data/raw/*
+!data/raw/manifest.parquet
 data/interim/
 data/processed/
 *.pdf
