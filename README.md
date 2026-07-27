@@ -7,8 +7,8 @@
 
 ## 現在のフェーズ
 
-- [x] P0: 先行研究サーベイ → [SURVEY.md](SURVEY.md)（判定: CONDITIONAL）
-- [ ] P1: データ取得可能性の確認
+- [x] P0: 先行研究サーベイ → [SURVEY.md](SURVEY.md)（判定: GO）
+- [x] P1: データ取得可能性の確認 → [DATA_SOURCES.md](DATA_SOURCES.md)（判定: 継続可）
 - [ ] P2: データ取得・パネル構築
 - [ ] P3: 記述統計
 - [ ] P4: 観測過程を考慮したモデル
