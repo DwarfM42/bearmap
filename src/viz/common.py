@@ -134,8 +134,9 @@ def is_holiday(d) -> bool:
 
 
 def round_to_mesh(lat: float, lon: float, mesh_km: float = 1.0) -> tuple[float, float] | tuple[None, None]:
-    """緯度経度を概算1kmメッシュに丸める（記述用途の近似。厳密なJIS地域メッシュではない）。
+    """緯度経度を概算1kmメッシュに丸める（P3記述統計用の近似。厳密なJIS地域メッシュではない）。
     札幌付近(北緯43度)の経度1度は概ね81km。
+    P4以降の共変量結合にはjis_3rd_mesh_code / jis_3rd_mesh_bounds（JIS標準地域メッシュ）を使うこと。
     """
     if lat is None or lon is None:
         return None, None
@@ -144,6 +145,38 @@ def round_to_mesh(lat: float, lon: float, mesh_km: float = 1.0) -> tuple[float, 
     lat_bin = math.floor(lat / lat_step) * lat_step + lat_step / 2
     lon_bin = math.floor(lon / lon_step) * lon_step + lon_step / 2
     return lat_bin, lon_bin
+
+
+def jis_3rd_mesh_code(lat: float, lon: float) -> str:
+    """JIS X0410 標準地域メッシュの3次メッシュ（約1km四方）コード（8桁）を返す。"""
+    p = int(lat * 60 // 40)
+    a = lat * 60 - p * 40
+    r = int(a // 5)
+    b = a - r * 5
+    t = int(b // 0.5)
+
+    q = int(lon - 100)
+    c = lon - 100 - q
+    s = int(c // (7.5 / 60))
+    d = c - s * (7.5 / 60)
+    u = int(d // (45 / 3600))
+
+    return f"{p:02d}{q:02d}{r}{s}{t}{u}"
+
+
+def jis_3rd_mesh_bounds(code8: str) -> tuple[float, float, float, float]:
+    """3次メッシュ8桁コードから (south, west, north, east) の境界を返す。"""
+    p, q, r, s, t, u = int(code8[0:2]), int(code8[2:4]), int(code8[4]), int(code8[5]), int(code8[6]), int(code8[7])
+    south = p * (40 / 60) + r * (5 / 60) + t * (0.5 / 60)
+    north = south + (0.5 / 60)
+    west = 100 + q + s * (7.5 / 60) + u * (45 / 3600)
+    east = west + (45 / 3600)
+    return south, west, north, east
+
+
+def jis_3rd_mesh_center(code8: str) -> tuple[float, float]:
+    s, w, n, e = jis_3rd_mesh_bounds(code8)
+    return (s + n) / 2, (w + e) / 2
 
 
 def savefig(fig, name: str) -> Path:
