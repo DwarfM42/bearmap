@@ -13,5 +13,5 @@
 - [x] P3: 記述統計・観測過程診断（札幌市のみ） → [P3_DESCRIPTIVE.md](P3_DESCRIPTIVE.md)（H1判定保留、H4部分的支持、H6曜日差は支持・原因は判定不能）
 - [x] P4a: 共変量取得・断層診断・分析仕様固定 → [reports/P4A_SUMMARY.md](reports/P4A_SUMMARY.md) / [P4_MODEL_PLAN.md](P4_MODEL_PLAN.md)
 - [x] P4b: ベースラインモデル・残差診断 → [P4_RESULTS.md](P4_RESULTS.md)（H1支持[識別問題あり]、H2支持、H6不支持[1条件1種別のみ限定的]）
-- [ ] P5: 食物資源・気象との突合（人間の承認待ち）
-- [ ] P6: レポート
+- [x] P5: 食物資源・気象との突合 → [P5_RESULTS.md](P5_RESULTS.md)（H3判定不能[n=6]、H5判定不能[n=9、単変量探索でも頑健な関連なし]）
+- [ ] P6: レポート（人間の承認待ち）
